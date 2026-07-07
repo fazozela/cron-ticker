@@ -1,14 +1,13 @@
-name: CI Pipeline                       #nombre visible en la pestaña de Actions
+name: CI Pipeline #nombre visible en la pestaña de Actions
 
-on:                                     # eventos que dispara el workflow
+on: # eventos que dispara el workflow
+  push: # cuando alguien hace push
+    branches: [main] # ...a la rama main
 
-  push:                                 # cuando alguien hace push
-    branches: [ main ]                  # ...a la rama main
-  
-  pull_request:                         # cuando alguien hace pull request (pr)
-    branches: [ main ]                  # ...a la rama main 
+  pull_request: # cuando alguien hace pull request (pr)
+    branches: [main] # ...a la rama main
 
-  workflow_dispatch:                    # permite ejecución manual desde la UI
+  workflow_dispatch: # permite ejecución manual desde la UI
 
 # Variables a nivel del workflow
 env:
@@ -16,7 +15,6 @@ env:
   APP_NAME: cron-ticker
 
 jobs:
-  
   build:
     runs-on: ubuntu-latest
 
@@ -35,8 +33,12 @@ jobs:
         run: |
           echo "App Version: ${{ vars.APP_VERSION }}"
 
+      - name: Show Github Variables NODE
+        run: |
+          echo "Node Version: ${{ vars.NODE_VERSION }}"
+
       # Variables a nivel del step
       - name: Build
         run: npm run build
-        env: 
-          APP_VERSION: '2.0.0'
+        env:
+          APP_VERSION: "2.0.0"
